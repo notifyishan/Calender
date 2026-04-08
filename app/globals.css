@@ -1,8 +1,31 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #fafaf9;
+  --foreground: #1c1917;
+  --cal-paper: #faf8f5;
+  --cal-paper-2: #f7f4ef;
+  --cal-ink: #1c1917;
+  --cal-muted: #78716c;
+  --cal-accent: #0ea5e9;
+  --cal-accent-soft: #e0f2fe;
+  --cal-today: #fbbf24;
+  --cal-line: #e7e5e4;
+}
+
+.dark {
+  --background: #0c0a09;
+  --foreground: #fafaf9;
+  --cal-paper: #1c1917;
+  --cal-paper-2: #292524;
+  --cal-ink: #fafaf9;
+  --cal-muted: #a8a29e;
+  --cal-accent: #38bdf8;
+  --cal-accent-soft: #0c4a6e;
+  --cal-today: #f59e0b;
+  --cal-line: #44403c;
 }
 
 @theme inline {
@@ -12,15 +35,37 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* @keyframes must be top-level — never write `.dark @keyframes` (invalid CSS). */
+@keyframes cal-selection-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgb(14 165 233 / 0.35);
   }
+  50% {
+    box-shadow: 0 0 0 5px rgb(14 165 233 / 0.12);
+  }
+}
+
+.dark .animate-cal-endpoint {
+  animation: cal-selection-pulse-dark 2.2s ease-in-out infinite;
+}
+
+@keyframes cal-selection-pulse-dark {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgb(56 189 248 / 0.35);
+  }
+  50% {
+    box-shadow: 0 0 0 5px rgb(56 189 248 / 0.12);
+  }
+}
+
+.animate-cal-endpoint {
+  animation: cal-selection-pulse 2.2s ease-in-out infinite;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
 }

@@ -1,36 +1,39 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Interactive wall calendar
 
-## Getting Started
+Next.js (App Router) + React + Tailwind CSS. Client-only persistence via `localStorage` (no backend).
 
-First, run the development server:
+## Features
+
+- **Wall calendar layout**: Hero image changes with the month; calendar grid sits beside it on large screens and stacks on small screens.
+- **Day range selection**: First tap sets the start date, second tap sets the end date (same day twice = single-day selection). A third selection starts a new range. Clear resets selection.
+- **Visual states**: Distinct styles for range endpoints and days in between; today is highlighted.
+- **Notes**: “Month memo” per month/year key; “Selection notes” tied to the chosen date range (or single day).
+- **Responsive**: Side-by-side on desktop (`lg`); vertical stack on mobile with 44px+ tap targets.
+- **Extras**: Holiday markers (federal vs cultural), scenic Unsplash hero per month, light/dark theme (persisted), optional lock on past dates, subtle selection pulse on range endpoints.
+- **Components**: `HeroSection`, `CalendarHeader`, `CalendarGrid`, `DayCell`, `SelectionBar`, `NotesPanel`, `ThemeToggle`; `InteractiveWallCalendar` uses `useState` + `localStorage` on load/blur + `ThemeProvider`.
+
+## Run locally
 
 ```bash
+cd interactive-calendar
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Build
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build
+npm start
+```
 
-## Learn More
+## Choices
 
-To learn more about Next.js, take a look at the following resources:
+- **State**: React `useState` / `useMemo` — scope is small; no global store needed.
+- **Dates**: Native `Date` + small helpers in `lib/calendar.ts` (no date library).
+- **Persistence**: `localStorage` JSON maps keyed by month (`YYYY-MM`) and by range (`YYYY-MM-DD_YYYY-MM-DD`).
+- **Images**: Remote images from `images.unsplash.com` via `next/image` (`next.config.ts` `remotePatterns`).
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+For submission, record a short demo video showing range selection, both note areas, and resizing between mobile and desktop widths.
